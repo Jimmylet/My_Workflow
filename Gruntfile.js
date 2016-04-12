@@ -17,8 +17,8 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( "grunt-contrib-watch" );
     grunt.loadNpmTasks( "grunt-cowsay" );
     grunt.loadNpmTasks( "grunt-eslint" );
-    grunt.loadNpmTasks( "grunt-browser-sync" );
     grunt.loadNpmTasks('grunt-contrib-stylus');
+
     //grunt.loadNpmTasks( "grunt-sass" );
 
     // 2. configure tasks
@@ -30,11 +30,13 @@ module.exports = function( grunt ) {
                     "src": "css/*.css"
                 },
                 "options": {
-                    "proxy": "localhost:12345", // TODO: adapt to you configuration
+                    "proxy": "localhost:60605", // TODO: adapt to you configuration
                     "watchTask": true
                 }
             }
         },
+        //live reload
+
         // cowsay
         "cowsay": {
             "done": {
@@ -75,7 +77,13 @@ module.exports = function( grunt ) {
             },
             "styles": {
                 "files": [ "www/stylus/**/*.styl" ],
-                "tasks": [ "stylus:styles" ]
+                "tasks": [ "stylus:styles" ],
+                options: {
+                    livereload: {
+                        host: 'localhost',
+                        port: 35729
+                    }
+                }
             }
         }
     } );
@@ -94,7 +102,6 @@ module.exports = function( grunt ) {
     grunt.registerTask( "work", [
         "build",
         "analyse",
-        "browserSync",
         "watch"
     ] );
 };
